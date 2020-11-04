@@ -6,7 +6,7 @@ Baby te quiero un monton.
 1 - se cargan todas las imagenes.asccii recursos/#nro.txt
 las imagenes se hicieron con https://www.ascii-art-generator.org/es.html B&N 120
 
-txt = 120x70 y alguito
+txt = 120x75
 
 
 """
@@ -20,11 +20,12 @@ class Software:
     def __init__(self):
         self.pantalla = Tk()
         self.tela = Canvas(self.pantalla, width=480, height=720, bg='snow')
-        self.fuente = tkFont.Font(family="Helvetica" ,size=5)
+        self.fuente = tkFont.Font(family="Lucida Blackletter" ,size=5)
         self.txtManu = Text(self.tela, font=self.fuente, width=120, height=75)
         self.rutaDelProyecto = str(os.path.dirname(os.path.abspath(__file__))) # En donde estoy padado
-        
         self.animaciones = [] # Aka se guarda el texto de la imagen
+        self.cargarImagenesAscii()
+        self.contadorImg = 0 # La img esta en un vector aca se controla el desplazamiento
 
         self._configurarPantallaYMostrar()
 
@@ -33,16 +34,25 @@ class Software:
         self.pantalla.geometry("480x720")
         self.tela.place(x=0, y=0)
         self.txtManu.place(x=0, y=0)
-        self.mostrarAnimacion()
+        self.pantalla.after(0, self.refrescarPantalla)
         self.pantalla.mainloop()
 
+    # este metodo refresca la pantalla cada X ms
+    def refrescarPantalla(self):
+        if self.contadorImg == 50:
+            self.contadorImg = 0
+        self.ingresarTexto(self.animaciones[self.contadorImg])
+        self.contadorImg = self.contadorImg + 1
+        
+        self.pantalla.after(50, self.refrescarPantalla)
 
-    def mostrarAnimacion(self):
+    #Este metodo carga todas las imagenes 
+    def cargarImagenesAscii(self):
         """
         Primero se intenta capturar todos los ascii y luego se muestran en el display
         """
         #Capturar
-        for i in range(0, 88):
+        for i in range(0, 89):
             try:
                 ruta = self.rutaDelProyecto + "\\recursos\\" + str(i) + ".txt"
                 f = open(ruta, 'r', encoding='UTF-8')
@@ -50,19 +60,11 @@ class Software:
                 f.close()
             except:
                 pass
-
-        self.ingresarTexto(self.animaciones[0])
-
-
-
+            
+        
     def ingresarTexto(self, txt):
         self.txtManu.delete(1.0, END)
         self.txtManu.insert(END, txt)
-
-        
-       
-        
-
 
     def mostrarAtributosDeLasImagenes(self):
         """
@@ -75,10 +77,6 @@ class Software:
             print('largo: ', len(self.animaciones[i].split('\n')[0]))
             print('Ancho:', len(self.animaciones[i].split('\n')))
             
-
-        
-
-
 
 # SE lanza
 HBD = Software()
