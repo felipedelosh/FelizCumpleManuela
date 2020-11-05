@@ -7,8 +7,6 @@ Baby te quiero un monton.
 las imagenes se hicieron con https://www.ascii-art-generator.org/es.html B&N 120
 
 txt = 120x75
-
-
 """
 
 from tkinter import * # Libreria grafica
@@ -19,9 +17,9 @@ import os # Para saber en que parte del discu duro estan los archivos
 class Software:
     def __init__(self):
         self.pantalla = Tk()
-        self.tela = Canvas(self.pantalla, width=480, height=720, bg='snow')
-        self.fuente = tkFont.Font(family="Lucida Blackletter" ,size=5)
-        self.txtManu = Text(self.tela, font=self.fuente, width=120, height=75)
+        self.tela = Canvas(self.pantalla, width=480, height=522, bg='snow')
+        self.fuente = tkFont.Font(family="Lucida Console" ,size=5)
+        self.txtManu = Text(self.tela, bg='royalblue1', foreground="white", font=self.fuente, width=120, height=75)
         self.rutaDelProyecto = str(os.path.dirname(os.path.abspath(__file__))) # En donde estoy padado
         self.animaciones = [] # Aka se guarda el texto de la imagen
         self.cargarImagenesAscii()
@@ -31,7 +29,7 @@ class Software:
 
     def _configurarPantallaYMostrar(self):
         self.pantalla.title("Feliz Cumplea+os Manuelita.")
-        self.pantalla.geometry("480x720")
+        self.pantalla.geometry("480x522")
         self.tela.place(x=0, y=0)
         self.txtManu.place(x=0, y=0)
         self.pantalla.after(0, self.refrescarPantalla)
@@ -39,12 +37,12 @@ class Software:
 
     # este metodo refresca la pantalla cada X ms
     def refrescarPantalla(self):
-        if self.contadorImg == 50:
+        if self.contadorImg == 88:
             self.contadorImg = 0
         self.ingresarTexto(self.animaciones[self.contadorImg])
         self.contadorImg = self.contadorImg + 1
         
-        self.pantalla.after(50, self.refrescarPantalla)
+        self.pantalla.after(40, self.refrescarPantalla)
 
     #Este metodo carga todas las imagenes 
     def cargarImagenesAscii(self):
